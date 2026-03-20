@@ -1,0 +1,95 @@
+//小车状态
+{
+  "type": "edge_heartbeat",
+  "timestamp": 1710680000.000,
+  "payload": {
+    "device_id": "rescue_car_01",
+    "latency_ms": 12,        // 延迟
+    "battery_level": 85      // 电量
+  }
+}
+
+//视觉
+{
+  "type": "edge_vision_objects",
+  "timestamp": 1710680000.123,
+  "payload": {
+    "device_id": "rescue_car_01",
+    "objects": [
+      {"class": "survivor_red", "x": 150, "y": 200},
+      {"class": "hazard_fire_yellow", "x": 160, "y": 180}
+    ]
+  }
+}
+
+//图片
+{
+  "type": "edge_image_frame",
+  "timestamp": 1710680000.300,
+  "payload": {
+    "encoding": "base64",
+    "image_data": "iVBORw0KGgoAAAANSUhEUgAA..." // Base64字符串
+  }
+}
+
+//温度
+{
+  "type": "edge_temperature",
+  "timestamp": 1710680000.200,
+  "payload": {
+    "device_id": "rescue_car_01",
+    "sensor_label": "front_arm_temp",
+    "celsius": 45.5
+  }
+}
+
+//超声波/雷达
+{
+  "type": "edge_radar_scan",
+  "timestamp": 1710680000.250,
+  "payload": {
+    "device_id": "rescue_car_01",
+    "scan_data": [
+      {"angle": 0, "distance_cm": 150.2},
+      {"angle": 45, "distance_cm": 80.5},
+      {"angle": 90, "distance_cm": 30.0}
+    ]
+  }
+}
+
+//人工信息
+{
+  "type": "chat_message",
+  "timestamp": 1710680001.000,
+  "payload": {
+    "role": "人工指挥", 
+    "content": "全体停止当前动作，优先报告现场温度！", 
+    "status": "finished"
+  }
+}
+
+//agent信息
+{
+  "type": "chat_message",
+  "timestamp": 1710680001.000,
+  "payload": {
+    "role": "agent1",  
+    "content": "环境安全，可以进入", 
+    "status": "finished" // "speaking" (话没说完，正在流式输出), "finished" (话说完了)
+  }
+}
+
+//执行指令
+{
+  "type": "terminal_control",
+  "timestamp": 1710680005.000,
+  "payload": {
+    "device_id": "rescue_car_01",
+    "action": "move_to_coord", // 或者是 grab, turn, stop
+    "parameters": {
+      "x": 150,
+      "y": 200,
+      "speed": 50
+    }
+  }
+}
