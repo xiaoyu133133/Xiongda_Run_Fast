@@ -2,7 +2,7 @@ import { AgentMessage, NetworkStats, Robot } from '../types';
 
 export const initialRobots: Robot[] = [
   {
-    id: 'dog-001',
+    id: 'rescue_car_01', // <--- 改成了后端的设备 ID
     type: 'dog',
     status: 'patrol',
     position: { x: -4, y: 0, z: -3 },

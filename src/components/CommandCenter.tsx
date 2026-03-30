@@ -4,12 +4,33 @@ import { useAppStore } from '../store/useStore';
 
 export default function CommandCenter() {
   const [text, setText] = useState('');
+  // 从 Store 拿到真正的 WebSocket 发送函数
+  const sendWsMessage = useAppStore((state) => state.sendWsMessage);
   const addCommand = useAppStore((state) => state.addCommand);
 
   const onSend = () => {
     const trimmed = text.trim();
     if (!trimmed) return;
+
+    // 1. 组装符合后端协议的 JSON
+    const payload = {
+      type: "chat_message",
+      timestamp: Date.now() / 1000,
+      payload: {
+        role: "人工指挥",
+        content: trimmed,
+        status: "finished"
+      }
+    };
+
+    // 2. 发送给 Python 后端
+    if (sendWsMessage) {
+      sendWsMessage(payload);
+    }
+
+    // 3. 记录到本地的历史指令里 (可选)
     addCommand({ id: `${Date.now()}`, text: trimmed, timestamp: new Date().toLocaleTimeString() });
+    
     setText('');
   };
 
@@ -33,7 +54,7 @@ export default function CommandCenter() {
         <textarea
           rows={3}
           className="w-full resize-none rounded-xl border border-slate-600 bg-slate-800 px-3 py-2 text-sm text-white outline-none focus:border-indigo-400"
-          placeholder="请输入指令，Shift+Enter 换行，Enter 发送..."
+          placeholder="请输入优先指令，Enter 发送给云端大模型..."
           value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={onKeyDown}

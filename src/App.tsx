@@ -3,10 +3,12 @@ import CommandCenter from './components/CommandCenter';
 import Dashboard from './components/Dashboard';
 import RobotStatus from './components/RobotStatus';
 import ThreeScene from './components/ThreeScene';
-import { useMockData } from './hooks/useMockData';
+// 引入刚刚写好的真实数据 Hook，替换掉之前的 useMockData
+import { useRealData } from './hooks/useRealData'; 
 
 function App() {
-  useMockData();
+  // 启动全双工 WebSocket 通信
+  useRealData(); 
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 p-2 text-white">
@@ -17,7 +19,7 @@ function App() {
               <div className="text-sm text-slate-300">智蜂-灵犬-劲熊</div>
               <div className="text-2xl font-bold">基于多智能体协同的5G应急指挥系统</div>
             </div>
-            <div className="rounded-full bg-indigo-500/20 px-3 py-2 text-xs text-indigo-200">纯前端模拟原型 · 5G 应急场景</div>
+            <div className="rounded-full bg-indigo-500/20 px-3 py-2 text-xs text-indigo-200">后端联调测试中</div>
           </div>
         </header>
 

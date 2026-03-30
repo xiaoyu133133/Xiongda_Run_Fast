@@ -50,3 +50,22 @@ export interface AppState {
   updateNetworkStats: (next: NetworkStats) => void;
   setSelectedRobotId: (id: string | null) => void;
 }
+
+
+// src/types.ts 的其余部分保持不变...
+
+export interface AppState {
+  robots: Robot[];
+  messages: AgentMessage[];
+  commands: Command[];
+  networkHistory: NetworkStats[];
+  selectedRobotId: string | null;
+  addAgentMessage: (msg: AgentMessage) => void;
+  addCommand: (cmd: Command) => void;
+  updateRobot: (id: string, patch: Partial<Robot>) => void;
+  updateNetworkStats: (next: NetworkStats) => void;
+  setSelectedRobotId: (id: string | null) => void;
+  
+  // 新增：用于发送 WebSocket 消息的方法
+  sendWsMessage?: (msg: any) => void;
+}
