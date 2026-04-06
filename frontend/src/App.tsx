@@ -10,7 +10,6 @@ import SystemLog from './components/SystemLog';
 import { useRealData } from './hooks/useRealData'; 
 
 function App() {
-  // 启动全双工 WebSocket 通信
   useRealData(); 
 
   const robots = useAppStore((state) => state.robots);
@@ -48,41 +47,35 @@ function App() {
       {/* 🌟 核心内容区 */}
       <div className="flex-grow grid grid-cols-12 gap-3 min-h-0">
         
-        {/* ✅ 修改1：左侧栏。彻底移除 xl: 前缀，强制锁定 col-span-3 (占比25%) */}
+        {/* 左侧栏 */}
         <div className="col-span-3 flex flex-col gap-3 min-h-0">
           <div className="h-[55%] shrink-0 rounded-2xl overflow-hidden border border-slate-700 bg-slate-900/80 relative">
             <ThreeScene />
           </div>
-          <div className="flex-grow min-h-0 relative">
-            {/* 使用 absolute inset-0 解决高度塌陷 */}
-            <div className="absolute inset-0">
-              <SystemLog />
-            </div>
+          <div className="flex-grow min-h-0">
+            <SystemLog />
           </div>
         </div>
 
-        {/* ✅ 修改2：中间栏。强制锁定 col-span-6 (占比50%) */}
+        {/* 中间栏 */}
         <div className="col-span-6 flex flex-col gap-3 min-h-0">
-          <div className="flex-grow min-h-0 relative">
-            <div className="absolute inset-0">
-              <AgentChat />
-            </div>
+          <div className="flex-grow min-h-0">
+            <AgentChat />
           </div>
           <div className="shrink-0">
             <CommandCenter />
           </div>
         </div>
 
-        {/* ✅ 修改3：右侧栏。强制锁定 col-span-3 (占比25%) */}
+        {/* ✅ 右侧栏：修改为明确的高度划分 */}
         <div className="col-span-3 flex flex-col gap-3 min-h-0">
-          <div className="shrink-0 w-full">
+          {/* 给机器人列表分配约 40% 的高度 */}
+          <div className="h-[40%] shrink-0 min-h-0">
             <RobotStatus />
           </div>
-          <div className="flex-grow min-h-0 relative w-full">
-            {/* 使用 absolute inset-0 彻底解决右侧 Dashboard (ECharts) 的黑屏问题 */}
-            <div className="absolute inset-0">
-              <Dashboard />
-            </div>
+          {/* 给图表分配剩余的 60% 高度 */}
+          <div className="flex-grow min-h-0">
+            <Dashboard />
           </div>
         </div>
         
@@ -90,8 +83,6 @@ function App() {
     </div>
   );
 }
-
-// ----------------- 子组件区域 -----------------
 
 interface HeaderBadgeProps {
   icon: React.ElementType;

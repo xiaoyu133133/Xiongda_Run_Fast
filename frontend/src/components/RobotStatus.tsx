@@ -24,15 +24,18 @@ export default function RobotStatus() {
   const sorted = useMemo(() => [...robots].sort((a, b) => a.id.localeCompare(b.id)), [robots]);
 
   return (
-    <div className="rounded-2xl border border-slate-700 bg-slate-900/80 p-3 shadow-xl">
-      <div className="mb-2 flex items-center justify-between">
+    // ✅ 修改1：增加 flex h-full flex-col
+    <div className="flex h-full flex-col rounded-2xl border border-slate-700 bg-slate-900/80 p-3 shadow-xl">
+      <div className="shrink-0 mb-2 flex items-center justify-between">
         <div>
           <div className="text-xs text-slate-300">机器人状态</div>
           <div className="text-lg font-semibold">Robot Status</div>
         </div>
         <span className="rounded-full bg-violet-500/20 px-2 py-1 text-xs text-violet-300">实时</span>
       </div>
-      <div className="space-y-2">
+      
+      {/* ✅ 修改2：改为 flex-grow 和 overflow-y-auto，让列表在内部滚动 */}
+      <div className="flex-grow overflow-y-auto min-h-0 space-y-2 pr-1 custom-scrollbar">
         {sorted.map((robot) => (
           <button
             key={robot.id}
